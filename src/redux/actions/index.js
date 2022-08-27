@@ -1,9 +1,13 @@
 // Coloque aqui suas actions
 import { EMAIL_LOGIN } from '../reducers/user';
+import { WALLET_EXPENSES } from '../reducers/wallet';
 
-const userEmail = (email) => ({
+export const userEmail = (email) => ({
   type: EMAIL_LOGIN,
   email,
 });
 
-export default userEmail;
+export const walletExpenses = (idToEdit) => ({
+  type: WALLET_EXPENSES,
+  idToEdit,
+});

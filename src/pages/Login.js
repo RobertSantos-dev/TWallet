@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import userEmail from '../redux/actions';
+import { userEmail } from '../redux/actions';
 
 const VALUE_LENGTH = 6;
 const EMAIL_VALID = '@email.com';
@@ -12,12 +12,9 @@ class Login extends React.Component {
 
     this.state = {
       email: '',
-      passwordLogin: '',
-      // isHabilited: true,
+      password: '',
     };
 
-    // this.handleChangeEmail = this.handleChangeEmail.bind(this);
-    // this.handleChangePassword = this.handleChangePassword.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.btnValidad = this.btnValidad.bind(this);
@@ -36,9 +33,9 @@ class Login extends React.Component {
   }
 
   btnValidad() {
-    const { email, passwordLogin } = this.state;
+    const { email, password } = this.state;
     const condicao = !email.includes(EMAIL_VALID);
-    const condicao2 = passwordLogin.length < VALUE_LENGTH;
+    const condicao2 = password.length < VALUE_LENGTH;
 
     const res = (condicao || condicao2) || false;
     return res;
@@ -60,7 +57,7 @@ class Login extends React.Component {
         <div>
           <input
             type="password"
-            name="passwordLogin"
+            name="password"
             data-testid="password-input"
             onChange={ this.handleChange }
           />
