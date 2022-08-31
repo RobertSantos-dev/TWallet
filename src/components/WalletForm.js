@@ -59,65 +59,90 @@ class WalletForm extends Component {
     return (
       <form>
         <div>
-          <input
-            type="text"
-            name="value"
-            data-testid="value-input"
-            value={ value }
-            onChange={ this.handleChange }
-          />
+          <label htmlFor="value">
+            Valor:
+            {' '}
+            <input
+              type="number"
+              name="value"
+              id="value"
+              data-testid="value-input"
+              value={ value }
+              onChange={ this.handleChange }
+            />
+          </label>
         </div>
         <div>
-          <textarea
-            name="description"
-            cols="30"
-            rows="10"
-            data-testid="description-input"
-            value={ description }
-            onChange={ this.handleChange }
-          >
-            ...
-          </textarea>
+          <label htmlFor="description">
+            Descrição:
+            {' '}
+            <textarea
+              name="description"
+              id="description"
+              cols="30"
+              rows="10"
+              data-testid="description-input"
+              value={ description }
+              onChange={ this.handleChange }
+            >
+              ...
+            </textarea>
+          </label>
         </div>
         <div>
-          <select
-            name="currency"
-            data-testid="currency-input"
-            value={ currency }
-            onChange={ this.handleChange }
-          >
-            { currencies.map((obj, i) => (
-              <option value={ obj } key={ i } selected={ i === 0 }>
-                { obj }
-              </option>
-            )) }
-          </select>
+          <label htmlFor="currency">
+            Moeda:
+            {' '}
+            <select
+              name="currency"
+              id="currency"
+              data-testid="currency-input"
+              value={ currency }
+              onChange={ this.handleChange }
+            >
+              { currencies.map((obj, i) => (
+                <option value={ obj } key={ i } selected={ i === 0 }>
+                  { obj }
+                </option>
+              )) }
+            </select>
+          </label>
         </div>
         <div>
-          <select
-            name="method"
-            data-testid="method-input"
-            onChange={ this.handleChange }
-            value={ method }
-          >
-            <option value="Dinheiro" selected>Dinheiro</option>
-            <option value="Cartão de crédito">Cartão de crédito</option>
-            <option value="Cartão de débito">Cartão de débito</option>
-          </select>
+          <label htmlFor="method">
+            Método:
+            {' '}
+            <select
+              name="method"
+              id="method"
+              data-testid="method-input"
+              onChange={ this.handleChange }
+              value={ method }
+            >
+              <option value="Dinheiro" selected>Dinheiro</option>
+              <option value="Cartão de crédito">Cartão de crédito</option>
+              <option value="Cartão de débito">Cartão de débito</option>
+            </select>
+          </label>
         </div>
         <div>
-          <select
-            name="tag"
-            data-testid="tag-input"
-            onChange={ this.handleChange }
-            value={ tag }
-          >
-            <option value="Alimentação" selected>Alimentação</option>
-            <option value="Lazer">Lazer</option>
-            <option value="Trabalho">Trabalho</option>
-            <option value="Transporte">Transporte</option>
-            <option value="Saúde">Saúde</option>
-          </select>
+          <label htmlFor="tag">
+            Marcação:
+            {' '}
+            <select
+              name="tag"
+              id="tag"
+              data-testid="tag-input"
+              onChange={ this.handleChange }
+              value={ tag }
+            >
+              <option value="Alimentação" selected>Alimentação</option>
+              <option value="Lazer">Lazer</option>
+              <option value="Trabalho">Trabalho</option>
+              <option value="Transporte">Transporte</option>
+              <option value="Saúde">Saúde</option>
+            </select>
+          </label>
         </div>
         <div>
           <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
