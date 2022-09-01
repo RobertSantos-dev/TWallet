@@ -2,6 +2,7 @@
 export const WALLET_EXPENSES = 'WALLET_EXPENSES';
 export const REQUEST_COINS = 'REQUEST_COINS';
 export const REQUEST_API = 'REQUEST_API';
+export const DELETE_EXPENSES = 'DELETE_EXPENSES';
 
 const WALLET_STATE = {
   currencies: [], // array de string
@@ -19,6 +20,8 @@ export default function wallet(state = WALLET_STATE, action) {
     return { ...state, currencies: action.payload };
   case REQUEST_API:
     return { ...state, expenses: [...state.expenses, action.payload] };
+  case DELETE_EXPENSES:
+    return { ...state, expenses: action.payload };
   default:
     return state;
   }

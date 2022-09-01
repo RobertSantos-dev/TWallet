@@ -8,6 +8,7 @@ import mockData from './mockData';
 import App from '../../App';
 import WalletForm from '../../components/WalletForm';
 import Header from '../../components/Header';
+import Table from '../../components/Table';
 
 describe('Testes para obter no minimo 60% de corbetura', () => {
   const EMAIL_USER = 'robert@email.com';
@@ -61,25 +62,70 @@ describe('Testes para obter no minimo 60% de corbetura', () => {
     expect(emailText).toBeInTheDocument();
   });
 
-  test('05 - Testanto se uma api é chamada', () => {
-    global.fetch = async () => ({
+  test('05 - Testanto se uma api é chamada', async () => {
+    global.fetch = jest.fn(async () => ({
       json: async () => mockData,
-    });
+    }));
+    const eventos = [EMAIL_USER, '123321'];
 
     renderWithRouterAndRedux(<App />);
 
-    const labelEmail = screen.getByLabelText(/email/i);
-    const labelPassword = screen.getByLabelText(/password/i);
-    const btn = screen.getByRole('button', { name: /entrar/i });
+    const labels = [
+      screen.getByLabelText(/email/i),
+      screen.getByLabelText(/password/i),
+      screen.getByRole('button', { name: /entrar/i }),
+    ];
 
-    expect(labelEmail).toBeInTheDocument();
-    expect(labelPassword).toBeInTheDocument();
-    expect(btn).toBeInTheDocument();
+    labels.forEach((e) => {
+      expect(e).toBeInTheDocument();
+    });
+    eventos.forEach((e, i) => {
+      userEvent.type(labels[i], e);
+    });
+    userEvent.click(labels[2]);
 
-    userEvent.type(labelEmail, EMAIL_USER);
-    userEvent.type(labelPassword, '123321');
-    userEvent.click(btn);
-
+    const element = await screen.findByLabelText(/moeda/i);
     expect(global.fetch).toBeCalledTimes(1);
+    expect(element).toBeInTheDocument();
+  });
+
+  test('06 - Testanto se existem os campos da tabela', async () => {
+    global.fetch = jest.fn(async () => ({
+      json: async () => mockData,
+    }));
+    renderWithRouterAndRedux(
+      <Table />,
+      { initialState: { wallet: {
+        currencies: Object.keys(mockData).filter((e) => e !== 'USDT'),
+        expenses: [{
+          id: 0,
+          value: '125',
+          description: 'Meus testes',
+          currency: 'EUR',
+          method: 'Cartão de débito',
+          tag: 'Trabalho',
+          exchangeRates: mockData,
+        }],
+        editor: false,
+        idToEdit: '650.95',
+      } } },
+    );
+
+    const elementText = [
+      'Descrição',
+      'Tag',
+      'Método de pagamento',
+      'Valor',
+      'Moeda',
+      'Câmbio utilizado',
+      'Valor convertido',
+      'Moeda de conversão',
+      'Editar/Excluir',
+    ];
+
+    elementText.forEach((e) => {
+      const element = screen.getByText(e);
+      expect(element).toBeInTheDocument();
+    });
   });
 });

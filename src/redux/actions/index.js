@@ -1,6 +1,11 @@
 // Coloque aqui suas actions
 import { EMAIL_LOGIN } from '../reducers/user';
-import { WALLET_EXPENSES, REQUEST_COINS, REQUEST_API } from '../reducers/wallet';
+import {
+  WALLET_EXPENSES,
+  REQUEST_COINS,
+  REQUEST_API,
+  DELETE_EXPENSES,
+} from '../reducers/wallet';
 import store from '../store';
 
 export const userEmail = (email) => ({
@@ -8,7 +13,7 @@ export const userEmail = (email) => ({
   email,
 });
 
-const walletExpenses = (obj) => {
+export const walletExpenses = (obj) => {
   const res = obj.reduce((acc, at) => {
     const arr = Object.values(at.exchangeRates);
     const ret = arr.find((e) => e.code === at.currency);
@@ -59,3 +64,8 @@ export function fetchApi(arr) {
     }
   };
 }
+
+export const deleteRow = (arr) => ({
+  type: DELETE_EXPENSES,
+  payload: arr,
+});

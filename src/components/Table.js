@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { deleteRow, walletExpenses } from '../redux/actions';
+
 class Table extends Component {
   valorMoeda = (obj, condicao, chave) => {
     let res = Object.entries(obj).find((e) => e[0] === condicao);
@@ -23,6 +25,14 @@ class Table extends Component {
       * Number(e.value)).toFixed(2),
       'Real',
     ]));
+  };
+
+  removeLinha = ({ parentElement: { parentElement: { id } } }) => {
+    const { dispatch, expenses } = this.props;
+    const res = expenses.filter((e) => e.id !== Number(id));
+
+    dispatch(deleteRow(res));
+    dispatch(walletExpenses(res));
   };
 
   render() {
@@ -47,7 +57,7 @@ class Table extends Component {
           <tbody>
             {
               rowTable.map((e) => (
-                <tr key={ e[0] }>
+                <tr key={ e[0] } id={ e[0] }>
                   <td>{ e[1] }</td>
                   <td>{ e[2] }</td>
                   <td>{ e[3] }</td>
@@ -56,6 +66,15 @@ class Table extends Component {
                   <td>{ e[6] }</td>
                   <td>{ e[7] }</td>
                   <td>{ e[8] }</td>
+                  <td>
+                    <button
+                      type="button"
+                      data-testid="delete-btn"
+                      onClick={ ({ target }) => this.removeLinha(target) }
+                    >
+                      Excluir
+                    </button>
+                  </td>
                 </tr>
               ))
             }
@@ -72,6 +91,7 @@ const mapStateToProps = (state) => ({
 
 Table.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps)(Table);
