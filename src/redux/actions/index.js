@@ -5,9 +5,22 @@ import {
   REQUEST_COINS,
   REQUEST_API,
   DELETE_EXPENSES,
+  EDITOR_BOOL,
+  EDITOR_EXPENSES,
 } from '../reducers/wallet';
 import store from '../store';
 
+const request = (json) => ({
+  type: REQUEST_COINS,
+  payload: json,
+});
+
+const requestApi = (json) => ({
+  type: REQUEST_API,
+  payload: json,
+});
+
+// Funções exportadas
 export const userEmail = (email) => ({
   type: EMAIL_LOGIN,
   email,
@@ -22,19 +35,9 @@ export const walletExpenses = (obj) => {
 
   return {
     type: WALLET_EXPENSES,
-    idToEdit: res.toFixed(2),
+    totalExpenses: res.toFixed(2),
   };
 };
-
-const request = (json) => ({
-  type: REQUEST_COINS,
-  payload: json,
-});
-
-const requestApi = (json) => ({
-  type: REQUEST_API,
-  payload: json,
-});
 
 export function fetchCoins() {
   return async (dispatch) => {
@@ -68,4 +71,14 @@ export function fetchApi(arr) {
 export const deleteRow = (arr) => ({
   type: DELETE_EXPENSES,
   payload: arr,
+});
+
+export const editorRow = (editor) => ({
+  type: EDITOR_BOOL,
+  editor,
+});
+
+export const editorRowObject = (idToEdit) => ({
+  type: EDITOR_EXPENSES,
+  idToEdit,
 });
