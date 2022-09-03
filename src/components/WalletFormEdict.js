@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { fetchCoins, deleteRow, editorRow } from '../redux/actions';
+import { fetchCoins, deleteRow, editorRow, walletExpenses } from '../redux/actions';
 
 class WalletFormEdict extends Component {
   constructor(props) {
@@ -14,10 +14,10 @@ class WalletFormEdict extends Component {
     this.state = {
       id: idToEdit,
       value: obj.value,
-      description: obj.description,
       currency: obj.currency,
       method: obj.method,
       tag: obj.tag,
+      description: obj.description,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -50,6 +50,7 @@ class WalletFormEdict extends Component {
     });
     dispatch(deleteRow(res));
     dispatch(editorRow(false));
+    dispatch(walletExpenses(res));
   }
 
   render() {

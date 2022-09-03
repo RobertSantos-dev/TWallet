@@ -1,22 +1,15 @@
 import { deleteRow, walletExpenses, editorRow, editorRowObject } from '../redux/actions';
 // import store from '../redux/store';
 
-const valorMoeda = (obj, condicao, chave) => {
+export const valorMoeda = (obj, condicao, chave) => {
   let res = Object.entries(obj).find((e) => e[0] === condicao);
   res = res[1][chave];
   return res;
 };
 
 export const titulos = [
-  'Descrição',
-  'Tag',
-  'Método de pagamento',
-  'Valor',
-  'Moeda',
-  'Câmbio utilizado',
-  'Valor convertido',
-  'Moeda de conversão',
-  'Editar/Excluir',
+  'Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda', 'Câmbio utilizado',
+  'Valor convertido', 'Moeda de conversão', 'Editar/Excluir',
 ];
 
 export const linhaTabela = (expenses) => expenses.map((e) => ([
